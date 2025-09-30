@@ -22,35 +22,86 @@ function App() {
     { value: 'cheerful', label: 'Cheerful', emoji: '🎊' },
   ];
 
+  const fallbackGreetings = [
+    {
+      message: "✨ Wishing you a Diwali filled with joy, prosperity, and endless happiness! May the divine light of diyas illuminate your path to success. Happy Diwali! 🪔",
+      style: "traditional"
+    },
+    {
+      message: "🎆 May this Diwali bring you abundant joy, health, and wealth! Let's celebrate the victory of light over darkness. Shubh Deepavali! 🌟",
+      style: "festive"
+    },
+    {
+      message: "🪔 On this auspicious occasion of Diwali, may Goddess Lakshmi bless you with prosperity and Lord Ganesha remove all obstacles from your life. Happy Diwali! 🙏",
+      style: "spiritual"
+    },
+    {
+      message: "✨ Sending you warm wishes and bright lights this Diwali! May your life sparkle with moments of love, laughter, and goodwill. Have a blessed Diwali! 💫",
+      style: "warm"
+    },
+    {
+      message: "🎇 May the festival of lights brighten up your life with happiness, success, and good health. Wishing you and your family a very Happy Diwali! 🪔",
+      style: "family"
+    },
+    {
+      message: "🌟 Let's celebrate the triumph of good over evil and light over darkness! May this Diwali bring new opportunities and endless joy. Shubh Deepavali! 🎆",
+      style: "inspirational"
+    },
+    {
+      message: "🪔 May the glow of diyas and the echo of chants fill your life with peace and prosperity. Wishing you a sparkling Diwali full of love and laughter! ✨",
+      style: "poetic"
+    },
+    {
+      message: "🎊 Happy Diwali! May this festival of lights illuminate your dreams and bring you success in all your endeavors. Celebrate with joy and sweets! 🍬",
+      style: "cheerful"
+    }
+  ];
+
   const generateGreeting = async () => {
     setLoading(true);
     setCopied(false);
-    try {
-      const response = await axios.post(`${API_URL}/generate-greeting`, {
-        name: name.trim(),
-        tone: tone
+    
+    // Simulate API call delay for better UX
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
+    const filtered = tone 
+      ? fallbackGreetings.filter(g => g.style === tone)
+      : fallbackGreetings;
+    const greeting = filtered[Math.floor(Math.random() * filtered.length)] || fallbackGreetings[0];
+    
+    if (name.trim()) {
+      setGreeting({
+        message: `Dear ${name.trim()},\n\n${greeting.message}`,
+        style: greeting.style,
+        isAI: false
       });
-      setGreeting(response.data.greeting);
-    } catch (error) {
-      console.error('Error generating greeting:', error);
-      alert('Failed to generate greeting. Please try again!');
-    } finally {
-      setLoading(false);
+    } else {
+      setGreeting({ ...greeting, isAI: false });
     }
+    
+    setLoading(false);
   };
 
   const getRandomGreeting = async () => {
     setLoading(true);
     setCopied(false);
-    try {
-      const response = await axios.get(`${API_URL}/random-greeting`);
-      setGreeting(response.data.greeting);
-    } catch (error) {
-      console.error('Error getting random greeting:', error);
-      alert('Failed to get greeting. Please try again!');
-    } finally {
-      setLoading(false);
+    
+    // Simulate API call delay
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
+    const greeting = fallbackGreetings[Math.floor(Math.random() * fallbackGreetings.length)];
+    
+    if (name.trim()) {
+      setGreeting({
+        message: `Dear ${name.trim()},\n\n${greeting.message}`,
+        style: greeting.style,
+        isAI: false
+      });
+    } else {
+      setGreeting({ ...greeting, isAI: false });
     }
+    
+    setLoading(false);
   };
 
   const copyToClipboard = () => {

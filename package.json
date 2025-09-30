@@ -1,0 +1,15 @@
+{
+  "name": "diwali-greeting-app",
+  "version": "1.0.0",
+  "description": "AI-powered Diwali greeting generator",
+  "scripts": {
+    "install-all": "cd backend && npm install && cd ../frontend && npm install",
+    "dev:backend": "cd backend && npm start",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build": "cd frontend && npm install && npm run build",
+    "vercel-build": "cd frontend && npm install && npm run build"
+  },
+  "keywords": ["diwali", "greetings", "react", "nodejs"],
+  "author": "",
+  "license": "ISC"
+}

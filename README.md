@@ -1,5 +1,7 @@
 # 🪔 Diwali Greeting App
 
+LINK - https://diwali-greeting-app.netlify.app/
+
 A beautiful AI-powered Diwali greeting generator built with React and Node.js.
 
 ## ✨ Features
